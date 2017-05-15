@@ -33,4 +33,14 @@ RUN wget http://mirror.cc.columbia.edu/pub/software/apache/zookeeper/zookeeper-3
 RUN tar -zxf zookeeper-3.4.6.tar.gz && mv zookeeper-3.4.6 /usr/local/zookeeper
 RUN mkdir -p /var/lib/zookeeper
 ADD zoo.cfg /usr/local/zookeeper/conf/zoo.cfg
+
+#Install the Kafka Broker
+# busybox wget does not support https
+RUN wget http://apache.claz.org/kafka/0.10.2.1/kafka_2.12-0.10.2.1.tgz -O kafka_2.12-0.10.2.1.tgz
+RUN tar -zxf kafka_2.12-0.10.2.1.tgz && mv kafka_2.12-0.10.2.1 /usr/local/kafka
+RUN mkdir /tmp/kafka-logs
+VOLUME /tmp
+
+#default zookeeper and kafka port
 EXPOSE 2181
+EXPOSE 9092
