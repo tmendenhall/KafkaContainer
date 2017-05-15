@@ -1,4 +1,7 @@
 FROM alpine:3.5
+#install bash
+RUN apk add --no-cache bash=4.3.46-r5
+
 # install Java here add environment variable for JAVA_HOME
 # based on https://github.com/docker-library/openjdk/blob/master/8-jre/alpine/Dockerfile
 # Default to UTF-8 file.encoding
@@ -25,9 +28,9 @@ RUN set -x \
 	&& [ "$JAVA_HOME" = "$(docker-java-home)" ]
 
 #Install zookeeper
-CMD wget http://mirror.cc.columbia.edu/pub/software/apache/zookeeper/zookeeper-3.4.6/zookeeper-3.4.6.tar.gz -O /tmp/zookeeper-3.4.6.tar.gz
 WORKDIR /tmp
-CMD tar -zxf zookeeper-3.4.6.tar.gz && mkdir -p /usr/local && mv zookeeper-3.4.6 /usr/local/zookeeper
-CMD mkdir -p /var/lib/zookeeper
+RUN wget http://mirror.cc.columbia.edu/pub/software/apache/zookeeper/zookeeper-3.4.6/zookeeper-3.4.6.tar.gz -O zookeeper-3.4.6.tar.gz
+RUN tar -zxf zookeeper-3.4.6.tar.gz && mv zookeeper-3.4.6 /usr/local/zookeeper
+RUN mkdir -p /var/lib/zookeeper
 ADD zoo.cfg /usr/local/zookeeper/conf/zoo.cfg
 EXPOSE 2181
