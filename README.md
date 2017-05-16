@@ -1,3 +1,5 @@
+
+Scripts for starting the internal components. Not added to Container CMD by default.
 starting zookeeper (until added)
 /usr/local/zookeeper/bin/zkServer.sh start
 
